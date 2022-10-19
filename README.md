@@ -1,4 +1,167 @@
-# Multisig Smart Contract (MSC)
+# Multisig Smart Contract (MSC) - Enhanced
+
+
+Multisignature contract written in Rust based on the Elrond template. Read the overview on the Elrond base contract [below](#template-contract-description)
+
+---
+
+The following features have been added:
+
+- [Delegation](#delegation)
+- [Funds distribution](#funds-distribution)
+
+
+## Delegation
+
+In order to enable delegation (staking), the following actions have been added:
+
+- [Delegate](#delegate)
+- [UnDelegate](#undelegate)
+- [ReDelegateRewards](#redelegaterewards)
+- [ClaimRewards](#claimrewards)
+- [Withdraw](#withdraw)
+
+---
+
+<br>
+
+### `Delegate`
+    
+In order to delegate, the proposal for delegation (`proposeDelegate`) requires the following parameters:
+
+| action parameter | Type | Description |
+| --- | --- | --- |
+| provider_address | `ManagedAddress` | erd address of the provider to delegate to |
+| amount | `BigUint` | Amount to be delegated |
+
+<br>
+
+---
+
+<br>
+
+### `UnDelegate`
+    
+In order to un-delegate, the proposal for un-delegation (`proposeUnDelegate`) requires the following parameters:
+
+| action parameter | Type | Description |
+| --- | --- | --- |
+| provider_address | `ManagedAddress` | erd address of the provider to undelegate from |
+| amount | `BigUint` | Amount to be undelegated |
+
+<br>
+
+---
+
+<br>
+
+### `ReDelegateRewards`
+    
+In order to re-delegate the accumulated rewards, the proposal for re-delegation (`proposeReDelegateRewards`) requires the following parameters:
+
+| action parameter | Type | Description |
+| --- | --- | --- |
+| provider_address | `ManagedAddress` | erd address of the provider to re-delegate rewards from and to |
+
+<br>
+
+---
+
+<br>
+
+### `ClaimRewards`
+    
+In order to claim rewards, the proposal for claiming (`proposeClaimRewards`) requires the following paramters:
+
+| action parameter | Type | Description |
+| --- | --- | --- |
+| provider_address | `ManagedAddress` | erd address of the provider to claim rewards from |
+
+<br>
+
+---
+
+<br>
+
+### `Withdraw`
+   
+In order to claim withdraw un-delegated EGLD, the proposal for withdrawal (`proposeWithdraw`) requires the following paramters:
+
+| action parameter | Type | Description |
+| --- | --- | --- |
+| provider_address | `ManagedAddress` | erd address of the provider to withdraw from |
+
+<br>
+
+---
+
+<br>
+
+## Funds Distribution
+
+For multisig contracts that hold for example a sales wallet from an NFT sale, the contract owners might want to define in advance what part of the sales income will be distributed to whom. They may make use of the funds distribution functions to add and remove beneficiaries of a funds distribution and may propose and execute the distribution of all funds available in the multisig. Conflicts for funds distribution can thus be resolved in advance.
+
+The following actions and endpoints have been added to enable this feature:
+
+**Actions**
+- [AddBeneficiary](#addbeneficiary)
+- [RemoveBeneficiary](#removebeneficiary)
+- [DistributeFunds](#distributefunds)
+
+**Endpoints**
+- `getBeneficiaries` -> returns list of all addresses that are beneficiaries
+- `getUserFraction` -> for a given address that is a beneficiary, returns the fraction associated with the address
+
+
+**Note**
+>Please note that there is currently no mechanism to check that all fractions add up to a whole of 1 times the funds. It is up to the proposers to ensure a correct distribution. The benficiaries will receive funds in the order they are stored in the SC with the associated fractions without checks.
+
+---
+
+<br>
+
+### `AddBeneficiary`
+    
+In order to add an address as beneficiary, the proposal (`proposeAddBeneficiary`) requires the following parameters:
+
+| action parameter | Type | Description |
+| --- | --- | --- |
+| beneficiary_address | `ManagedAddress` | erd address of the wallet to redirect a fraction of the funds to |
+| amount_fraction | `u32` | whole number to divide the funds by to be redirected to wallet |
+
+
+---
+
+<br>
+
+### `RemoveBeneficiary`
+    
+In order to remove an address from the beneficiaries, the proposal (`proposeRemoveBeneficiary`) requires the following parameters:
+
+| action parameter | Type | Description |
+| --- | --- | --- |
+| beneficiary_address | `ManagedAddress` | erd address of the wallet to remove from the list |
+
+---
+
+<br>
+
+### `DistributeFunds`
+    
+In order to remove an address from the beneficiaries, the proposal (`proposeDistributeFunds`) requires no parameters
+
+
+
+
+---
+
+<br>
+<br>
+
+# Template Contract Description
+
+<br>
+
 
 ## Abstract
 Cryptocurrencies can be one of the safest ways to store and manage wealth and value. By safeguarding a short list of words, the so-called seed or recovery phrase, anyone can protect thousands or millions of dollars in wealth and rest assured that no hacker or government can take it from them. In practice, it’s never so easy.
