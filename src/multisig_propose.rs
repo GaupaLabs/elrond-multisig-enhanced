@@ -132,4 +132,48 @@ pub trait MultisigProposeModule: crate::multisig_state::MultisigStateModule {
             arguments: arguments.into_vec_of_buffers(),
         })
     }
+
+    /// Initiates delegation process.
+    #[endpoint(proposeDelegate)]
+    fn propose_delegate(
+        &self, 
+        provider_address: ManagedAddress, 
+        amount: BigUint
+    ) -> SCResult<usize> {
+        self.propose_action(Action::Delegate {
+            provider_address,
+            amount,
+        })
+    }
+
+    /// Initiates un-delegation process.
+    #[endpoint(proposeUnDelegate)]
+    fn propose_undelegate(
+        &self, 
+        provider_address: ManagedAddress, 
+        amount: BigUint
+    ) -> SCResult<usize> {
+        self.propose_action(Action::UnDelegate {
+            provider_address,
+            amount,
+        })
+    }
+
+    /// Initiates redelegation of rewards
+    #[endpoint(proposeReDelegateRewards)]
+    fn propose_redelegate_rewards(&self, provider_address: ManagedAddress) -> SCResult<usize> {
+        self.propose_action(Action::ReDelegateRewards(provider_address))
+    }
+
+    /// Initiates claiming rewards
+    #[endpoint(proposeClaimRewards)]
+    fn propose_claim_rewards(&self, provider_address: ManagedAddress) -> SCResult<usize> {
+        self.propose_action(Action::ClaimRewards(provider_address))
+    }
+
+    /// Initiates claiming rewards
+    #[endpoint(proposeWithdraw)]
+    fn propose_withdraw(&self, provider_address: ManagedAddress) -> SCResult<usize> {
+        self.propose_action(Action::Widthdraw(provider_address))
+    }
 }

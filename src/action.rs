@@ -38,6 +38,17 @@ pub enum Action<M: ManagedTypeApi> {
         code_metadata: CodeMetadata,
         arguments: ManagedVec<M, ManagedBuffer<M>>,
     },
+    Delegate {
+        provider_address: ManagedAddress<M>,
+        amount: BigUint<M>,
+    },
+    UnDelegate {
+        provider_address: ManagedAddress<M>,
+        amount: BigUint<M>,
+    },
+    ReDelegateRewards(ManagedAddress<M>),
+    ClaimRewards(ManagedAddress<M>),
+    Widthdraw(ManagedAddress<M>),
 }
 
 impl<M: ManagedTypeApi> Action<M> {

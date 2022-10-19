@@ -5,7 +5,7 @@
 #![no_std]
 
 elrond_wasm_node::external_view_wasm_endpoints! {
-    multisig
+    multisig_enhanced
     (
         getActionData
         getActionSignerCount

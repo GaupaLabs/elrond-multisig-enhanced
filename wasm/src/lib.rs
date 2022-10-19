@@ -5,7 +5,7 @@
 #![no_std]
 
 elrond_wasm_node::wasm_endpoints! {
-    multisig
+    multisig_enhanced
     (
         deposit
         discardAction
@@ -18,10 +18,15 @@ elrond_wasm_node::wasm_endpoints! {
         proposeAddProposer
         proposeAsyncCall
         proposeChangeQuorum
+        proposeClaimRewards
+        proposeDelegate
+        proposeReDelegateRewards
         proposeRemoveUser
         proposeSCDeployFromSource
         proposeSCUpgradeFromSource
         proposeTransferExecute
+        proposeUnDelegate
+        proposeWithdraw
         quorumReached
         sign
         signed

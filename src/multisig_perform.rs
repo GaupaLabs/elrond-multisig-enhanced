@@ -199,6 +199,75 @@ pub trait MultisigPerformModule: crate::multisig_state::MultisigStateModule {
                 );
                 Ok(PerformActionResult::Nothing)
             },
+            Action::Delegate {
+                provider_address,
+                amount,
+            } => {
+
+                let _result = Self::Api::send_api_impl().direct_egld_execute(
+                    &provider_address,
+                    &amount,
+                    12_000_000,
+                    &ManagedBuffer::from("delegate".as_bytes()),
+                    &ManagedArgBuffer::new_empty(),
+                );
+
+                Ok(PerformActionResult::Nothing)
+            }
+            Action::UnDelegate {
+                provider_address,
+                amount,
+            } => {
+
+                let mut arguments = ManagedArgBuffer::new_empty();
+                arguments.push_arg_raw(ManagedBuffer::from(amount.to_bytes_be_buffer()));
+
+                let _result = Self::Api::send_api_impl().direct_egld_execute(
+                    &provider_address,
+                    &BigUint::zero(),
+                    12_000_000,
+                    &ManagedBuffer::from("unDelegate".as_bytes()),
+                    &arguments,
+                );
+
+                Ok(PerformActionResult::Nothing)
+            },
+            Action::ReDelegateRewards(provider_address) => {
+                
+                let _result = Self::Api::send_api_impl().direct_egld_execute(
+                    &provider_address,
+                    &BigUint::zero(),
+                    12_000_000,
+                    &ManagedBuffer::from("reDelegateRewards".as_bytes()),
+                    &ManagedArgBuffer::new_empty(),
+                );
+
+                Ok(PerformActionResult::Nothing)
+            },
+            Action::ClaimRewards(provider_address) => {
+                
+                let _result = Self::Api::send_api_impl().direct_egld_execute(
+                    &provider_address,
+                    &BigUint::zero(),
+                    12_000_000,
+                    &ManagedBuffer::from("claimRewards".as_bytes()),
+                    &ManagedArgBuffer::new_empty(),
+                );
+
+                Ok(PerformActionResult::Nothing)
+            },
+            Action::Widthdraw(provider_address) => {
+                
+                let _result = Self::Api::send_api_impl().direct_egld_execute(
+                    &provider_address,
+                    &BigUint::zero(),
+                    12_000_000,
+                    &ManagedBuffer::from("withdraw".as_bytes()),
+                    &ManagedArgBuffer::new_empty(),
+                );
+
+                Ok(PerformActionResult::Nothing)
+            },
         }
     }
 }
