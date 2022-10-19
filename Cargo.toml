@@ -1,6 +1,6 @@
 [package]
 name = "multisig-enhanced"
-version = "0.0.1"
+version = "0.1.0"
 authors = [ "Gaupa Labs",]
 edition = "2018"
 publish = false

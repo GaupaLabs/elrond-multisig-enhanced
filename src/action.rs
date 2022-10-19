@@ -49,6 +49,12 @@ pub enum Action<M: ManagedTypeApi> {
     ReDelegateRewards(ManagedAddress<M>),
     ClaimRewards(ManagedAddress<M>),
     Widthdraw(ManagedAddress<M>),
+    AddBeneficiary {
+        beneficiary_address: ManagedAddress<M>,
+        amount_fraction: u32,
+    },
+    RemoveBeneficiary(ManagedAddress<M>),
+    DistributeFunds,
 }
 
 impl<M: ManagedTypeApi> Action<M> {

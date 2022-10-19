@@ -10,17 +10,22 @@ elrond_wasm_node::wasm_endpoints! {
         deposit
         discardAction
         getActionLastIndex
+        getBeneficiaries
         getNumBoardMembers
         getNumProposers
         getQuorum
+        getUserFraction
         performAction
+        proposeAddBeneficiary
         proposeAddBoardMember
         proposeAddProposer
         proposeAsyncCall
         proposeChangeQuorum
         proposeClaimRewards
         proposeDelegate
+        proposeDistributeFunds
         proposeReDelegateRewards
+        proposeRemoveBeneficiary
         proposeRemoveUser
         proposeSCDeployFromSource
         proposeSCUpgradeFromSource

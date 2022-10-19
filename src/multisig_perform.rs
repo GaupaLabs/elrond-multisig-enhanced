@@ -268,6 +268,37 @@ pub trait MultisigPerformModule: crate::multisig_state::MultisigStateModule {
 
                 Ok(PerformActionResult::Nothing)
             },
+            Action::AddBeneficiary {
+                beneficiary_address,
+                amount_fraction,
+            } => {
+                self.user_fraction(&beneficiary_address).set(amount_fraction);
+                self.beneficiaries().insert(beneficiary_address);
+                Ok(PerformActionResult::Nothing)
+            },
+            Action::RemoveBeneficiary(beneficiary_address) => {
+                self.beneficiaries().remove(&beneficiary_address);
+                Ok(PerformActionResult::Nothing)
+            },
+            Action::DistributeFunds => {
+
+                let current_balance = &self.blockchain().get_sc_balance(&TokenIdentifier::egld(), 0);
+
+                for address in self.beneficiaries().iter() {
+
+                    let user_fraction = self.user_fraction(&address).get();
+                    let user_amount = current_balance.div(user_fraction);
+
+                    Self::Api::send_api_impl().direct_egld(
+                        &address,
+                        &user_amount,
+                        &[],
+                    );
+
+                }
+
+                Ok(PerformActionResult::Nothing)
+            },
         }
     }
 }

@@ -23,6 +23,16 @@ pub trait MultisigStateModule {
         (caller_id, caller_role)
     }
 
+    /// Beneficiaries for fund distribution
+    #[view(getBeneficiaries)]
+    #[storage_mapper("beneficiaries")]
+    fn beneficiaries(&self) -> SetMapper<ManagedAddress>;
+
+    /// Fractions of funds to distribute per address
+    #[view(getUserFraction)]
+    #[storage_mapper("user_fraction")]
+    fn user_fraction(&self, address: &ManagedAddress) -> SingleValueMapper<u32>;
+
     /// Denormalized board member count.
     /// It is kept in sync with the user list by the contract.
     #[view(getNumBoardMembers)]

@@ -176,4 +176,33 @@ pub trait MultisigProposeModule: crate::multisig_state::MultisigStateModule {
     fn propose_withdraw(&self, provider_address: ManagedAddress) -> SCResult<usize> {
         self.propose_action(Action::Widthdraw(provider_address))
     }
+
+    /// Propose a transaction in which the contract will perform a transfer-execute call.
+    /// Will send all contract funds to the addresses on the beneficiary list
+    /// Amounts are according to the amount fractions associated with the beneficiary addresses.
+    #[endpoint(proposeDistributeFunds)]
+    fn propose_distribute_funds(
+        &self,
+    ) -> SCResult<usize> {
+        self.propose_action(Action::DistributeFunds)
+    }
+
+    /// Initiates beneficiary addition process.
+    #[endpoint(proposeAddBeneficiary)]
+    fn propose_add_beneficiary(
+        &self, 
+        beneficiary_address: ManagedAddress, 
+        amount_fraction: u32
+    ) -> SCResult<usize> {
+        self.propose_action(Action::AddBeneficiary {
+            beneficiary_address,
+            amount_fraction,
+        })
+    }
+
+    /// Initiates beneficiary removal process.
+    #[endpoint(proposeRemoveBeneficiary)]
+    fn propose_remove_beneficiary(&self, beneficiary_address: ManagedAddress) -> SCResult<usize> {
+        self.propose_action(Action::RemoveBeneficiary(beneficiary_address))
+    }
 }
